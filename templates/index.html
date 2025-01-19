@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+</head>
+<body>
+
+<div class="container">
+    <h1>Expense Tracker</h1>
+
+    <!-- Form to add a new expense -->
+    <h2>Add New Expense</h2>
+    <form action="/add_expense" method="POST" id="expenseForm">
+        <label for="date">Date (DD-MM-YYYY):</label>
+        <input type="text" name="date" id="date" placeholder="DD-MM-YYYY" required>
+
+        <label for="description">Description:</label>
+        <input type="text" name="description" id="description" required>
+
+        <label for="amount">Amount (€):</label>
+        <input type="number" step="0.01" name="amount" id="amount" required>
+
+        <input type="submit" value="Add Expense">
+    </form>
+
+    <!-- Display the list of expenses -->
+    <h2>Expense List</h2>
+    {% if expenses %}
+    <ul>
+        {% for expense in expenses %}
+            <li>
+                <strong>{{ expense.date }}</strong> - {{ expense.description }}: €{{ expense.amount }}
+                <!-- Button to remove the expense -->
+                <form action="{{ url_for('remove_expense', index=loop.index0) }}" method="POST" style="display:inline;">
+                    <button type="submit" onclick="return confirm('Are you sure you want to remove this expense?')">Remove</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No expenses found.</p>
+    {% endif %}
+
+
+    <!-- Display the total expense -->
+    <h2>Total Expense: €{{ total }}</h2>
+</div>
+
+<footer>
+    <p>Expense Tracker App | Made by Nisha Chavan</p>
+</footer>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
