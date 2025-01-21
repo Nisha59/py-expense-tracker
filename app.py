@@ -71,9 +71,6 @@ def index():
     # else:
     #     expenses = MyTask.query.order_by(MyTask.date).all()
         # return render_template('index.html', expenses=expenses)
-        
-    
-
 
    
 # Route to add a new expense
